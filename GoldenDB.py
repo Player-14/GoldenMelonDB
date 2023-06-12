@@ -3,9 +3,11 @@
 class GoldenDB():
     def __init__(database):
         import json
+        # Create a dictionary for database
         database = {}
     
     def insert(key, value):
+        # Add key-value
         database.append[key] = value
     
     def get(key):
@@ -23,5 +25,8 @@ class GoldenDB():
     def load(filename):
         with open(filename, "r") as fh:
             database = json.load(fp)
+    
+    def listall():
+        return list(database)
     
     

@@ -15,4 +15,8 @@ class GoldenDB():
     def delete(key):
         # delete key value pairs
         del database[key]
-
+    
+    def save(filename):
+        with open(filename, "w") as fh:
+            json.dump(database, fp)
+ 

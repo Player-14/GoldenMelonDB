@@ -19,4 +19,9 @@ class GoldenDB():
     def save(filename):
         with open(filename, "w") as fh:
             json.dump(database, fp)
- 
+
+    def load(filename):
+        with open(filename, "r") as fh:
+            database = json.load(fp)
+    
+    

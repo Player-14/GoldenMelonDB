@@ -1,40 +1,40 @@
 # Simple NoSQL Python Database
 
 class GoldenDB():
-    def __init__(database):
-        import json
+    def __init__(self, database):
+        
         # Create a dictionary for database
-        database = {}
+        self.database = database
     
-    def insert(key, value):
-        # Add key-value
-        database.append[key] = value
+    def insert(self, key, value):
+        # Add key-value pair
+        self.database.update({key:value})
     
-    def get(key):
-        container = database.get(key, None)
+    def get(self, key):
+        container = self.database.get(key, None)
         return container
     
-    def delete(key):
+    def delete(self, key):
         # delete key value pairs
-        del database[key]
+        del self.database[key]
     
-    def save(filename):
+    def save(self, filename):
+        import json
         # save contents of database in JSON
         with open(filename, "w") as fh:
-            json.dump(database, fp)
+            json.dump(self.database, fh)
 
-    def load(filename):
+    def load(self, filename):
+        import json
         # load contents of JSON into database
         with open(filename, "r") as fh:
-            database = json.load(fp)
+            self.database = json.load(fh)
     
-    def listall():
-        return list(database)
+    def listall(self):
+        return self.database.items()
     
-    def search(query):
-        if query in database:
-            return database[query]
+    def search(self, query):
+        if query in self.database:
+            return self.database[query]
         else:
             return "Not in database"
-    
-        

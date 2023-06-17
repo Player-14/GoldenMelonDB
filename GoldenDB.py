@@ -2,21 +2,23 @@
 
 class GoldenDB():
     def __init__(self, database):
-        
         # Create a dictionary for database
-        self.database = database
+        self.database = {}
     
-    def insert(self, key, value):
-        # Add key-value pair
-        self.database.update({key:value})
+    def newtable(self, table):
+        self.database.update({table:dict()})
+
+    def insert(self, table, key, value):
+        # Add key-value pairs
+        self.database[table].update({key:value})
     
-    def get(self, key):
-        container = self.database.get(key, None)
+    def get(self, table, key):
+        container = self.database[table].get(key, None)
         return container
     
-    def delete(self, key):
+    def delete(self, table, key):
         # delete key value pairs
-        del self.database[key]
+        del self.database[table][key]
     
     def save(self, filename):
         import json
@@ -27,14 +29,38 @@ class GoldenDB():
     def load(self, filename):
         import json
         # load contents of JSON into database
-        with open(filename, "r") as fh:
-            self.database = json.load(fh)
+        try:
+            with open(filename, "r") as fh:
+                self.database = json.load(fh)
+        except FileNotFoundError:
+            return "File {filename} Not Found!"
     
-    def listall(self):
-        return self.database.items()
+    def listall(self, table):
+        # list all contents of database
+        return self.database[table].items()
+
+    def wipe(self, table):
+        # overwrite existing database file with empty dictionary
+        if table == None:
+            self.database = {}
+        else:
+            self.database[table] = {}
     
-    def search(self, query):
+    def search(self, table, query):
         if query in self.database:
-            return self.database[query]
+            return self.database[table][query]
         else:
             return "Not in database"
+    def uninsert(self):
+        # remove last inserted object
+        self.database[table].popitem()
+
+    def countdb(self, table):
+        return len(self.database[table].items())
+
+    def ininsert(self, table, key, value):
+        return self.database[table].setdefault(key, value)
+
+    def tables(self):
+        return self.database.keys()
+        

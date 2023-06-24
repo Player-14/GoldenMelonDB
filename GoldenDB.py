@@ -4,9 +4,9 @@ class GoldenDB():
     def __init__(self, database):
         # Create a dictionary for database
         self.database = {}
-    
+
     def newtable(self, table):
-        self.database.update({table:dict()})
+        self.database.update({table:{}})
 
     def insert(self, table, key, value):
         # Add key-value pairs
@@ -21,17 +21,17 @@ class GoldenDB():
         del self.database[table][key]
     
     def save(self, filename):
-        import json
+        import ujson
         # save contents of database in JSON
         with open(filename, "w") as fh:
-            json.dump(self.database, fh)
+            ujson.dump(self.database, fh)
 
     def load(self, filename):
-        import json
+        import ujson
         # load contents of JSON into database
         try:
             with open(filename, "r") as fh:
-                self.database = json.load(fh)
+                self.database = ujson.load(fh)
         except FileNotFoundError:
             return "File {filename} Not Found!"
     
@@ -41,7 +41,7 @@ class GoldenDB():
 
     def wipe(self, table):
         # overwrite existing database file with empty dictionary
-        if table == None:
+        if table is None:
             self.database = {}
         else:
             self.database[table] = {}
@@ -63,4 +63,4 @@ class GoldenDB():
 
     def tables(self):
         return self.database.keys()
-        
+    

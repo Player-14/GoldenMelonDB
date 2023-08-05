@@ -9,6 +9,12 @@ class GoldenDB():
         # Create nested dictionary as table
         self.database.update({table:{}})
 
+    def anewtable(self, table):
+        if table not in self.database:
+            self.database.update({table:{}})
+        else:
+            return True
+
     def insert(self, table, key, value):
         # Add key-value pairs
         self.database[table].update({key:value})
@@ -37,6 +43,14 @@ class GoldenDB():
         except FileNotFoundError:
             return f"File {filename} Not Found!"
     
+    def loade(self, filename):
+        import ujson
+        try: # attempt to load database
+            with open(filename, "r") as fh:
+                self.database = ujson.load(fh)
+        except FileNotFoundError: # if file not found, make new file
+            open(filename, "w")
+
     def listall(self, table):
         # list all contents of database
         return self.database[table].items()
@@ -55,7 +69,7 @@ class GoldenDB():
         else:
             return "Not in database"
 
-    def uninsert(self):
+    def uninsert(self, table):
         # removes the last inserted object
         self.database[table].popitem()
 

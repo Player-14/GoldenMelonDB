@@ -13,7 +13,7 @@ class GoldenDB():
         if table not in self.database:
             self.database.update({table:{}})
         else:
-            return True
+            return self.listall(table)
 
     def insert(self, table, key, value):
         # Add key-value pairs
@@ -50,10 +50,12 @@ class GoldenDB():
                 self.database = ujson.load(fh)
         except FileNotFoundError: # if file not found, make new file
             open(filename, "w")
+        except ujson.JSONDecodeError:
+            return f"Empty Contents"
 
     def listall(self, table):
         # list all contents of database
-        return self.database[table].items()
+        return list(self.database[table].items())
 
     def wipe(self, table):
         # overwrite existing database file with empty dictionary
@@ -69,7 +71,7 @@ class GoldenDB():
         else:
             return "Not in database"
 
-    def uninsert(self, table):
+    def uninsert(self):
         # removes the last inserted object
         self.database[table].popitem()
 

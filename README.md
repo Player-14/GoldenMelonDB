@@ -19,3 +19,8 @@ To input data:
 ```
 db.insert("happytable", "my key", ["my list of values", True, False, 12, 1.2, {"A dictionary":"in a list"}])
 ```
+You can read data by using the get or search functions
+```
+db.get("happytable", "my key") //get statements search for keys in a table and returns its values. They assume you know that the key exists.
+db.search("happytable", "this doesnt exist")// these look for values and returns the key-value pairs.
+```
